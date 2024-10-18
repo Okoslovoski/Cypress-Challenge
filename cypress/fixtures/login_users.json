@@ -1,0 +1,38 @@
+{
+  "userDetails": [
+    {
+      "user": "standard_user",
+      "password": "secret_sauce"
+    },
+
+    {
+      "user": "problem_user",
+      "password": "secret_sauce"
+    },
+
+    {
+      "user": "performance_glitch_user",
+      "password": "secret_sauce"
+    },
+
+    {
+      "user": "error_user",
+      "password": "secret_sauce"
+    },
+
+    {
+      "user": "visual_user",
+      "password": "secret_sauce"
+    }
+  ],
+  "lockedUsers": [
+    {
+      "user": "locked_out_user",
+      "password": "secret_sauce"
+    },
+    {
+      "user": "bolinha mágica",
+      "password": "magical password"
+    }
+  ]
+}
