@@ -1,4 +1,4 @@
-import { userDetails } from "../fixtures/login_users.json";
+import { userDetails } from "../../fixtures/login_users.json";
 
 describe("Should login with multiple user options", () => {
   beforeEach("Visit the login page", () => {
