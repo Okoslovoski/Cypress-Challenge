@@ -1,0 +1,10 @@
+name: E2E tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: unbuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
