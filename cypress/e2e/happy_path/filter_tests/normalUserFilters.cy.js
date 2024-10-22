@@ -1,40 +1,50 @@
 import { products } from "../../../fixtures/products";
 
 describe("User should use filters to match desired items", () => {
-  const storeItems = Object.values(products);
+  const filters = [
+    { option: "az", text: "Name (A to Z)" },
+    { option: "za", text: "Name (Z to A)" },
+    { option: "lohi", text: "Price (low to high)" },
+    { option: "hilo", text: "Price (high to low)" },
+  ];
+
   beforeEach(() => {
     cy.visit("/");
     cy.login("standard_user", "secret_sauce");
   });
 
-  it("User Should use default filter", () => {
-    cy.get('[data-test="product-sort-container"]').select("az");
-    const sortedItems = storeItems.map((product) => product.displayName).sort();
-    const pageItems = (itemName) => {
-      cy.get(`[data-test="add-to-cart-${itemName}"]`).each((item, index) => {
-        cy.wrap(item).should("have.text", sortedItems[index]);
+  filters.forEach((filter) => {
+    it(`User should apply the filter: ${filter.text}`, () => {
+      cy.get('[data-test="product-sort-container"]').select(filter.option);
+
+      cy.get('[data-test="product-sort-container"] option:selected').should(
+        "have.text",
+        filter.text
+      );
+
+      cy.get(".inventory_item_name").then(($items) => {
+        const displayedNames = [...$items].map((item) => item.innerText);
+
+        let sortedNames;
+        if (filter.option === "az") {
+          sortedNames = products.map((p) => p.displayName).sort();
+        } else if (filter.option === "za") {
+          sortedNames = products
+            .map((p) => p.displayName)
+            .sort()
+            .reverse();
+        } else if (filter.option === "lohi") {
+          sortedNames = products
+            .sort((a, b) => a.price - b.price)
+            .map((p) => p.displayName);
+        } else if (filter.option === "hilo") {
+          sortedNames = products
+            .sort((a, b) => b.price - a.price)
+            .map((p) => p.displayName);
+        }
+
+        expect(displayedNames).to.deep.equal(sortedNames);
       });
-    };
+    });
   });
-  it("User Should use Z-A filter"),
-    () => {
-      cy.get('[data-test="product-sort-container"]').should(
-        "have.text",
-        "Name (Z to A)"
-      );
-    };
-  it("User should use low to high filter"),
-    () => {
-      cy.get('[data-test="product-sort-container"]').should(
-        "have.text",
-        "Price (low to high))"
-      );
-    };
-  it("User should use high to low filter"),
-    () => {
-      cy.get('[data-test="product-sort-container"]').should(
-        "have.text",
-        "Price (high to low))"
-      );
-    };
 });
