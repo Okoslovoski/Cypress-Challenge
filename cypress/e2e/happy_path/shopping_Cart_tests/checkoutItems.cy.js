@@ -68,5 +68,17 @@ describe("User should Checkout all items in the shopping cart", () => {
       "contain",
       `Total: $${totalPriceWithTax}`
     );
+
+    cy.get('[data-test="finish"]').should("be.visible").click();
+    cy.get('[data-test="pony-express"]').should("be.visible");
+    cy.get('[data-test="complete-header"]').should(
+      "have.text",
+      "Thank you for your order!"
+    );
+    cy.get('[data-test="complete-text"]').should(
+      "have.text",
+      "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
+    );
+    cy.get('[data-test="back-to-products"]').should("be.visible").click();
   });
 });
