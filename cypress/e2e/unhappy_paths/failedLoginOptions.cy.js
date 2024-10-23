@@ -20,5 +20,13 @@ describe("Failed login test", () => {
       "have.text",
       "Epic sadface: Username and password do not match any user in this service"
     );
+
+    it("Should try to login with no credentials", () => {
+      cy.get("[data-test=login-button]").click();
+      cy.get('[data-test="error"]').should(
+        "have.text",
+        "Epic sadface: Username is required"
+      );
+    });
   });
 });

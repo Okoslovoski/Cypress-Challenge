@@ -22,7 +22,7 @@ describe("User should use filters to match desired items", () => {
         filter.text
       );
 
-      cy.get(".inventory_item_name").then(($items) => {
+      cy.get('[data-test="inventory-item-name"]').then(($items) => {
         const displayedNames = [...$items].map((item) => item.innerText);
 
         let sortedNames;
